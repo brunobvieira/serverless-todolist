@@ -3,7 +3,7 @@ exports.envelop = function (res, statusCode = 200) {
   if (statusCode == 200) {
     body = JSON.stringify(res, null, 2);
   } else {
-    body = JSON.stringify({ errors: { body: [res] } }, null, 2);
+    body = JSON.stringify({ errors: res }, null, 2);
   }
   return {
     statusCode,

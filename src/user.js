@@ -1,16 +1,21 @@
 const Util = require("./util");
 const Joi = require("joi");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const { Pool } = require("pg");
 const pool = new Pool();
 
 module.exports = {
   async create(event) {
-    console.log(event.body);
     const body = JSON.parse(event.body);
 
-    let { value, error } = userSchema.validate(body);
-    if (error) return Util.envelop(error, 400);
+    let { value, error } = userSchema.validate(body, { abortEarly: false });
+    if (error) {
+      let messages = {};
+      error.details.forEach((err) => {
+        messages[err.path[0]] = err.message;
+      });
+      return Util.envelop(messages, 400);
+    }
 
     try {
       const usersWithThisUsername = await getUserByUsername(value.username);
@@ -60,5 +65,5 @@ const insertUser = async (user) => {
 const userSchema = Joi.object({
   username: Joi.string().min(3).max(50).required(),
   password: Joi.string().min(8).max(50).required(),
-  email: Joi.string().email(),
+  email: Joi.string().email().required(),
 });

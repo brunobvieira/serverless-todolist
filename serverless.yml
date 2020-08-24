@@ -6,6 +6,7 @@ provider:
   stage: dev
   region: sa-east-1
   apiName: todolist
+  timeout: 30
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -22,25 +23,13 @@ provider:
       - subnet-122b9749
       - subnet-03b6014a
   environment:
-    PGUSER: postgres
-    PGHOST: todolist.cdyqppsniqqs.sa-east-1.rds.amazonaws.com
-    PGPASSWORD: postgres
-    PGDATABASE: todolist
-    PGPORT: 5432
+    DBDIALECT: postgres
+    DBHOST: todolist.cdyqppsniqqs.sa-east-1.rds.amazonaws.com
+    DBUSER: postgres
+    DBPASSWORD: postgres
+    DBDATABASE: todolist
+    DBPORT: 5432
 
-functions:
-  createUser:
-    handler: src/user.create
-    events:
-      - http:
-          method: POST
-          path: api/user/
-          cors: true
-  
-  getUser:
-    handler: src/user.get
-    events:
-      - http:
-          method: GET
-          path: api/user/
-          cors: true
+
+functions: ${file(serverless-dynamic.js)}
+

@@ -1,0 +1,23 @@
+  createUser:
+    handler: modules/users/endpoints/create.create
+    events:
+      - http:
+          method: POST
+          path: api/user/
+          cors: true
+  
+  healthCheck:
+    handler: modules/users/endpoints/create.healthCheck
+    events:
+      - http:
+          method: GET
+          path: api/health/
+          cors: true
+
+  getUser:
+    handler: modules/users/endpoints/read.get
+    events:
+      - http:
+          method: GET
+          path: api/user/
+          cors: true

@@ -5,6 +5,7 @@ provider:
   runtime: nodejs12.x
   stage: dev
   region: sa-east-1
+  apiName: todolist
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -30,14 +31,16 @@ provider:
 functions:
   createUser:
     handler: src/user.create
-    - http:
-        method: POST
-        path: api/user/create
-        cors: true
+    events:
+      - http:
+          method: POST
+          path: api/user/
+          cors: true
   
   getUser:
     handler: src/user.get
-    - http:
-        method: GET
-        path: api/user/
-        cors: true
+    events:
+      - http:
+          method: GET
+          path: api/user/
+          cors: true

@@ -1,0 +1,43 @@
+service: todolist
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: sa-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - ec2:CreateNetworkInterface
+        - ec2:DescribeNetworkInterfaces
+        - ec2:DeleteNetworkInterface
+      Resource:
+        - "*"
+  vpc:
+    securityGroupIds:
+      - sg-07df6ee81bd0b35d4
+    subnetIds:
+      - subnet-10a51476
+      - subnet-122b9749
+      - subnet-03b6014a
+  environment:
+    PGUSER: postgres
+    PGHOST: todolist.cdyqppsniqqs.sa-east-1.rds.amazonaws.com
+    PGPASSWORD: postgres
+    PGDATABASE: todolist
+    PGPORT: 5432
+
+functions:
+  createUser:
+    handler: src/user.create
+    - http:
+        method: POST
+        path: api/user/create
+        cors: true
+  
+  getUser:
+    handler: src/user.get
+    - http:
+        method: GET
+        path: api/user/
+        cors: true

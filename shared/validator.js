@@ -4,11 +4,13 @@ module.exports = (schema, data) => {
   let { value, error } = schema.validate(data, { abortEarly: false });
 
   if (error) {
-    let messages = {};
-    error.details.forEach((err) => {
-      messages[err.path[0]] = err.message;
+    error = error.details.map((err) => {
+      return {
+        path: err.path[0],
+        error: err.message,
+        stack: "",
+      };
     });
-    error = messages;
   }
 
   return { value, error };

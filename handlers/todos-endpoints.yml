@@ -1,0 +1,7 @@
+  createTodo:
+    handler: modules/todos/endpoints/create.create
+    events:
+      - http:
+          method: POST
+          path: api/todo/
+          cors: true

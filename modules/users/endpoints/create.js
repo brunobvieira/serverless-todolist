@@ -32,7 +32,7 @@ module.exports.create = async (event) => {
         if (error) return response.json(error, 400);
 
         const usersWithThisUsername = await countByUsername(value.username);
-        if (usersWithThisUsername > 0) return response.json({ path: "email", message: "username already taken" }, 400);
+        if (usersWithThisUsername > 0) return response.json({ path: "username", message: "username already taken" }, 400);
 
         const usersWithThisEmail = await countByEmail(value.email);
         if (usersWithThisEmail > 0) return response.json({ path: "email", message: "email already taken" }, 400);

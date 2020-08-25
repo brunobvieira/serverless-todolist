@@ -5,3 +5,19 @@
           method: POST
           path: api/todo/
           cors: true
+
+  getTodo:
+    handler: modules/todos/endpoints/read.get
+    events:
+      - http:
+          method: GET
+          path: api/todo/{id}
+          cors: true
+
+  listTodos:
+    handler: modules/todos/endpoints/read.list
+    events:
+      - http:
+          method: GET
+          path: api/todo/
+          cors: true

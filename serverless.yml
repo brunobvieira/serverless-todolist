@@ -34,3 +34,5 @@ provider:
 
 functions: ${file(serverless-dynamic.js)}
 
+plugins:
+  - serverless-offline

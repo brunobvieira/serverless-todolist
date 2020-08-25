@@ -1,11 +1,11 @@
 "use strict";
 
 const Joi = require("joi");
-const bcrypt = require("bcryptjs");
 const UserModel = require("../../../models/User");
 const sequelize = require("../../../shared/database");
 const response = require("../../../shared/response");
 const validator = require("../../../shared/validator");
+const { generateToken, createPassword } = require("../../../shared/authorization");
 
 const User = UserModel(sequelize);
 
@@ -23,39 +23,37 @@ const countByEmail = async (email) => {
     return await User.count({ where: { email: email } });
 };
 
-module.exports.healthCheck = async (event) => {
-    try {
-        await sequelize.authenticate();
-        return response.json({ message: "Connection has been established successfully." }, 200);
-    } catch (err) {
-        return response.json(err, 500);
-    }
-};
-
 module.exports.create = async (event) => {
     try {
         const body = event.body ? event.body : event;
         const data = JSON.parse(body);
 
         let { value, error } = validator(userSchema, data);
-        if (error) {
-            return response.json(error, 400);
-        }
+        if (error) return response.json(error, 400);
 
         const usersWithThisUsername = await countByUsername(value.username);
-        if (usersWithThisUsername > 0) {
-            return response.json({ path: "email", message: "username already taken" }, 400);
-        }
+        if (usersWithThisUsername > 0) return response.json({ path: "email", message: "username already taken" }, 400);
 
         const usersWithThisEmail = await countByEmail(value.email);
-        if (usersWithThisEmail > 0) {
-            return response.json({ path: "email", message: "email already taken" }, 400);
-        }
+        if (usersWithThisEmail > 0) return response.json({ path: "email", message: "email already taken" }, 400);
 
-        value.password = bcrypt.hashSync(value.password, 5);
+        value.password = createPassword(value.password);
 
         const user = await User.create(value);
-        return response.json(user, 201);
+
+        let res = {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+            lastLogin: new Date()
+        };
+
+        res.token = generateToken(res);
+        await User.update({ lastLogin: res.lastLogin }, { where: { id: user.id } });
+        
+        return response.json(res, 201);
     } catch (err) {
         return response.json(err, 500);
     }

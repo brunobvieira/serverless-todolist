@@ -23,6 +23,7 @@ provider:
       - subnet-122b9749
       - subnet-03b6014a
   environment:
+    SECRET: 12345
     DBDIALECT: postgres
     DBHOST: todolist.cdyqppsniqqs.sa-east-1.rds.amazonaws.com
     DBUSER: postgres

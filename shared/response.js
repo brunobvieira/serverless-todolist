@@ -30,8 +30,9 @@ module.exports.json = (body = {}, status = 200) => {
     return {
         statusCode: status,
         headers: {
-            "Access-Control-Allow-Origin": "*"
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true
         },
-        body: body != null ? body : ""
+        body: body != null ? JSON.stringify(body) : ""
     };
 };

@@ -1,17 +1,17 @@
+  authenticationUser:
+    handler: modules/users/endpoints/auth.login
+    events:
+      - http:
+          method: POST
+          path: api/user/login
+          cors: true
+  
   createUser:
     handler: modules/users/endpoints/create.create
     events:
       - http:
           method: POST
           path: api/user/
-          cors: true
-  
-  healthCheck:
-    handler: modules/users/endpoints/create.healthCheck
-    events:
-      - http:
-          method: GET
-          path: api/health/
           cors: true
 
   getUser:

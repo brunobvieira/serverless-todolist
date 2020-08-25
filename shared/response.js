@@ -14,8 +14,9 @@ const formatError = (err) => {
     return formatedError;
 };
 
-module.exports.json = (body = {}, status = 200) => {
-    if (status >= 400 && typeof body == "object") {
+module.exports.json = (body = {}, status = 200, formatErr = true) => {
+    
+    if (formatErr && status >= 400 && typeof body == "object") {
         let fmtBody = { errors: [] };
 
         if (Array.isArray(body)) {

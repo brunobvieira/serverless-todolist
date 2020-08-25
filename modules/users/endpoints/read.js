@@ -1,12 +1,22 @@
 "use strict";
 
-const response = require("../../../shared/lib/response");
+const response = require("../../../shared/response");
+const { authenticateAndGetUser } = require("../../../shared/authorization");
 
-module.exports.get = (event, context, callback) => {
-  // const body = event.body ? event.body : event;
-  // const data = JSON.parse(body);
+module.exports.get = async (event) => {
+    const authenticatedUser = await authenticateAndGetUser(event);
+    if (!authenticatedUser) {
+        return response.json({ path: "token", message: `Token not present or invalid.` }, 400);
+    }
 
-  response.json(callback, {
-    name: "Bruno Beserra Vieiras",
-  });
+    let res = {
+        id: authenticatedUser.id,
+        username: authenticatedUser.username,
+        email: authenticatedUser.email,
+        createdAt: authenticatedUser.createdAt,
+        updatedAt: authenticatedUser.updatedAt,
+        lastLogin: authenticatedUser.lastLogin
+    };
+
+    return response.json(res, 200);
 };

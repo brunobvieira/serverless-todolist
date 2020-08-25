@@ -21,3 +21,11 @@
           method: GET
           path: api/user/
           cors: true
+  
+  syncDb:
+    handler: modules/users/endpoints/read.sync
+    events:
+      - http:
+          method: GET
+          path: api/sync/
+          cors: true

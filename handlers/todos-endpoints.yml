@@ -6,6 +6,22 @@
           path: api/todo/
           cors: true
 
+  updateTodo:
+    handler: modules/todos/endpoints/update.update
+    events:
+      - http:
+          method: PUT
+          path: api/todo/{id}
+          cors: true
+
+  deleteTodo:
+    handler: modules/todos/endpoints/delete.delete
+    events:
+      - http:
+          method: DELETE
+          path: api/todo/{id}
+          cors: true
+
   getTodo:
     handler: modules/todos/endpoints/read.get
     events:

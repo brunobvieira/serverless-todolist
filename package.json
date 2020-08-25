@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Simple TODO LIST APP",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec serverless offline start -e \"js yml json\""
   },
   "author": "Bruno Beserra Vieira",
   "license": "MIT",
@@ -17,6 +18,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "nodemon": "^2.0.4",
     "serverless-offline": "^6.5.0"
   }
 }

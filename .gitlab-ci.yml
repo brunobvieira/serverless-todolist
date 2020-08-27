@@ -14,6 +14,7 @@ deploy dev:
     - test -z "$AWS_SECRET_ACCESS_KEY" && echo $FAILURE_MESSAGE && exit 1
     - test -z "$AWS_ACCESS_KEY_ID" && echo $FAILURE_MESSAGE && exit 1
   script:
+    - npm install -g serverless
     - npm install --production
     - serverless deploy --stage dev --verbose
   only:
@@ -27,6 +28,7 @@ deploy production:
     - test -z "$AWS_SECRET_ACCESS_KEY" && echo $FAILURE_MESSAGE && exit 1
     - test -z "$AWS_ACCESS_KEY_ID" && echo $FAILURE_MESSAGE && exit 1
   script:
+    - npm install -g serverless
     - npm install --production
     - serverless deploy --stage production --verbose
   only:

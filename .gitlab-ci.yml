@@ -16,8 +16,8 @@ deploy dev:
   script:
     - npm install --production
     - serverless deploy --stage dev --verbose
-only:
-  - develop
+  only:
+    - develop
 
 
 deploy production:
@@ -29,5 +29,5 @@ deploy production:
   script:
     - npm install --production
     - serverless deploy --stage production --verbose
-only:
-  - master
+  only:
+    - master

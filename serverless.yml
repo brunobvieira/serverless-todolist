@@ -4,7 +4,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
-  region: ${opt:stage, 'sa-east-1'}
+  region: ${opt:stage, 'us-east-2'}
   apiName: todolist
   iamRoleStatements:
     - Effect: "Allow"
@@ -16,12 +16,12 @@ provider:
         - "*"
   environment:
     SECRET: ${env:APP_SECRET, '12345678'}
-    DBDIALECT: ${env:DBDIALECT, 'postgres'}
-    DBHOST: ${env:DBHOST, 'todolist.cdyqppsniqqs.sa-east-1.rds.amazonaws.com'}
-    DBUSER: ${env:DBUSER, 'postgres'}
-    DBPASSWORD: ${env:DBUSER, 'postgres'}
+    DBDIALECT: ${env:DBDIALECT, 'mysql'}
+    DBHOST: ${env:DBHOST, 'localhost'}
+    DBUSER: ${env:DBUSER, 'admin'}
+    DBPASSWORD: ${env:DBPASSWORD, '12345678'}
     DBDATABASE: ${env:DBDATABASE, 'todolist'}
-    DBPORT: ${env:DBPORT, '5432'}
+    DBPORT: ${env:DBPORT, '3306'}
   # SECURITY_GROUP_IDS --> security id's  separated by comma ex: export SECURITY_GROUP_IDS=1,2,3,4
   # SUBNET_IDS --> subnet id's  separated by comma ex: export SUBNET_IDS=1,2,3,4
   vpc: ${file(dynamic-vpc.js)}

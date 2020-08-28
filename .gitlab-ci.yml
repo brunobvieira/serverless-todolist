@@ -21,6 +21,7 @@ deploy dev:
   stage: deploy
   environment:
     name: develop
+    url: url: "https://${AWS_REGION}.console.aws.amazon.com/lambda/home?region=${AWS_REGION}#/applications/todolist-dev"
     on_stop: teardown dev
   script:
     - npm install --production
@@ -35,11 +36,15 @@ teardown dev:
     name: develop
     action: stop
   script:
+    - npm install --production
     - serverless remove --stage dev --region $AWS_REGION --verbose
 
 
 deploy production:
   stage: deploy
+  environment:
+    name: production
+    url: "https://${AWS_REGION}.console.aws.amazon.com/lambda/home?region=${AWS_REGION}#/applications/todolist-production"
   script:
     - npm install --production
     - serverless deploy --stage production --region $AWS_REGION --verbose

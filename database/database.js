@@ -1,0 +1,20 @@
+if (process.env.IS_OFFLINE || process.env.NODE_ENV == "local") {
+    module.exports = {
+        dialect: "sqlite",
+        storage: "database/db.sqlite"
+    };
+} else {
+    module.exports = {
+        host: process.env.DBHOST,
+        username: process.env.DBUSER,
+        password: process.env.DBPASSWORD,
+        database: process.env.DBDATABASE,
+        dialect: process.env.DBDIALECT,
+        port: process.env.DBPORT,
+        pool: {
+            min: 0,
+            max: 1,
+            idle: 10000
+        }
+    };
+}

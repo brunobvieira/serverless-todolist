@@ -13,6 +13,7 @@ before_script:
   - test -z "$AWS_SECRET_ACCESS_KEY" && echo $FAILURE_MESSAGE && exit 1
   - test -z "$AWS_ACCESS_KEY_ID" && echo $FAILURE_MESSAGE && exit 1
 
+
 ##########
 #  JOBS  #
 ##########
@@ -28,6 +29,7 @@ deploy dev:
     - serverless deploy --stage dev --region $AWS_REGION --verbose
   only:
     - develop
+    
 
 teardown dev:
   stage: teardown

@@ -1,12 +1,15 @@
 "use strict";
 
+const { Sequelize } = require("sequelize");
+
 const response = require("../../../shared/response");
 const { authenticateAndGetUser } = require("../../../shared/authorization");
+const UserModel = require("../../../database/models/User");
+const TodoModel = require("../../../database/models/Todo");
+const dbconfig = require("../../../database/database");
 
-const UserModel = require("../../../models/User");
-const TodoModel = require("../../../models/Todo");
-const sequelize = require("../../../shared/database");
 
+const sequelize = new Sequelize(dbconfig);
 const User = UserModel(sequelize);
 const Todo = TodoModel(sequelize);
 
@@ -31,5 +34,5 @@ module.exports.get = async (event) => {
 module.exports.sync = async (event) => {
     await User.sync({ force: true });
     await Todo.sync({ force: true });
-    return response.json({adfasd: 'dasd'}, 200);
-}
+    return response.json({ adfasd: "dasd" }, 200);
+};

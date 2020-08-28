@@ -1,14 +1,15 @@
 "use strict";
 
 const Joi = require("joi");
+const { Sequelize } = require("sequelize");
+
 const response = require("../../../shared/response");
 const validator = require("../../../shared/validator");
 const { authenticateAndGetUser } = require("../../../shared/authorization");
+const TodoModel = require("../../../database/models/Todo");
+const dbconfig = require("../../../database/database");
 
-const TodoModel = require("../../../models/Todo");
-const sequelize = require("../../../shared/database");
-
-const Todo = TodoModel(sequelize);
+const Todo = TodoModel(new Sequelize(dbconfig));
 
 const todoSchema = Joi.object({
     description: Joi.string().min(1).max(255).required()

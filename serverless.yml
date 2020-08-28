@@ -3,10 +3,9 @@ service: todolist
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
-  region: sa-east-1
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-2'}
   apiName: todolist
-  timeout: 30
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -15,24 +14,26 @@ provider:
         - ec2:DeleteNetworkInterface
       Resource:
         - "*"
-  vpc:
-    securityGroupIds:
-      - sg-07df6ee81bd0b35d4
-    subnetIds:
-      - subnet-10a51476
-      - subnet-122b9749
-      - subnet-03b6014a
   environment:
-    SECRET: 12345
-    DBDIALECT: postgres
-    DBHOST: todolist.cdyqppsniqqs.sa-east-1.rds.amazonaws.com
-    DBUSER: postgres
-    DBPASSWORD: postgres
-    DBDATABASE: todolist
-    DBPORT: 5432
+    SECRET: ${env:APP_SECRET, '12345678'}
+    DBDIALECT: ${env:DBDIALECT, 'mysql'}
+    DBHOST: ${env:DBHOST, 'localhost'}
+    DBUSER: ${env:DBUSER, 'admin'}
+    DBPASSWORD: ${env:DBPASSWORD, '12345678'}
+    DBDATABASE: ${env:DBDATABASE, 'todolist'}
+    DBPORT: ${env:DBPORT, '3306'}
+  # SECURITY_GROUP_IDS --> security id's  separated by comma ex: export SECURITY_GROUP_IDS=1,2,3,4
+  # SUBNET_IDS --> subnet id's  separated by comma ex: export SUBNET_IDS=1,2,3,4
+  vpc: ${file(dynamic-vpc.js)}
+    # securityGroupIds:
+    #   - sg-07df6ee81bd0b35d4ser
+    # subnetIds:
+    #   - subnet-10a51476
+    #   - subnet-122b9749
+    #   - subnet-03b6014a
 
 
-functions: ${file(serverless-dynamic.js)}
+functions: ${file(dynamic-handlers.js)}
 
 plugins:
   - serverless-offline

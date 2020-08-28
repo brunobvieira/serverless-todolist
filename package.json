@@ -1,25 +1,26 @@
 {
-  "name": "todolist",
-  "version": "1.0.0",
-  "description": "Simple TODO LIST APP",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec serverless offline start -e \"js yml json\""
-  },
-  "author": "Bruno Beserra Vieira",
-  "license": "MIT",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "joi": "^17.2.1",
-    "jsonwebtoken": "^8.5.1",
-    "pg": "^8.3.2",
-    "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.4",
-    "sqlite3": "^5.0.0",
-    "yamljs": "^0.3.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4",
-    "serverless-offline": "^6.5.0"
-  }
+    "name": "todolist",
+    "version": "1.0.0",
+    "description": "Simple TODO LIST APP",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon --exec serverless offline start -e \"js yml json\""
+    },
+    "author": "Bruno Beserra Vieira",
+    "license": "MIT",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "joi": "^17.2.1",
+        "jsonwebtoken": "^8.5.1",
+        "mysql2": "^2.1.0",
+        "pg": "^8.3.2",
+        "pg-hstore": "^2.3.3",
+        "sequelize": "^6.3.4",
+        "yamljs": "^0.3.0",
+        "serverless-offline": "^6.5.0"
+    },
+    "devDependencies": {
+        "sqlite3": "^5.0.0",
+        "nodemon": "^2.0.4"
+    }
 }

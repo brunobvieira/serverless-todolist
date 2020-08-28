@@ -21,7 +21,7 @@ deploy dev:
   stage: deploy
   environment:
     name: develop
-    url: url: "https://${AWS_REGION}.console.aws.amazon.com/lambda/home?region=${AWS_REGION}#/applications/todolist-dev"
+    url: "https://${AWS_REGION}.console.aws.amazon.com/lambda/home?region=${AWS_REGION}#/applications/todolist-dev"
     on_stop: teardown dev
   script:
     - npm install --production

@@ -16,7 +16,7 @@ before_script:
 
 deploy dev:
   stage: deploy
-  enviroment:
+  environment:
     name: develop
     on_stop: teardown dev
   before_script:
@@ -32,7 +32,7 @@ deploy dev:
 teardown dev:
   stage: teardown
   when: manual
-  enviroment:
+  environment:
     name: develop
     action: stop
   script:

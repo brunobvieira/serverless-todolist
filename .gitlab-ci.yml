@@ -40,6 +40,8 @@ migration dev:
 deploy dev:
   stage: deploy
   when: manual
+  needs:
+    - job: migration dev
   variables:
     NODE_ENV: development
   environment:
@@ -55,6 +57,8 @@ deploy dev:
 teardown dev:
   stage: teardown
   when: manual
+  needs:
+    - job: deploy dev
   environment:
     name: develop
     action: stop
@@ -77,6 +81,8 @@ migration prod:
 deploy prod:
   stage: deploy
   when: manual
+  needs:
+    - job: migration prod
   variables:
     NODE_ENV: production
   environment:

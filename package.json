@@ -4,7 +4,13 @@
     "description": "Simple TODO LIST APP",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "nodemon --exec serverless offline start -e \"js yml json\""
+        "dev": "nodemon --exec serverless offline start -e \"js yml json\"",
+        "migrate": "sequelize db:migrate",
+        "migrate:undo": "sequelize db:migrate:undo:all",
+        "seed": "sequelize db:seed:all",
+        "seed:undo": "sequelize db:seed:undo:all",
+        "migrate local": "NODE_ENV=local sequelize db:migrate",
+        "migrate:undo local": "NODE_ENV=local sequelize db:migrate:undo:all"
     },
     "author": "Bruno Beserra Vieira",
     "license": "MIT",
@@ -16,11 +22,12 @@
         "pg": "^8.3.2",
         "pg-hstore": "^2.3.3",
         "sequelize": "^6.3.4",
-        "yamljs": "^0.3.0",
-        "serverless-offline": "^6.5.0"
+        "serverless-offline": "^6.5.0",
+        "yamljs": "^0.3.0"
     },
     "devDependencies": {
-        "sqlite3": "^5.0.0",
-        "nodemon": "^2.0.4"
+        "nodemon": "^2.0.4",
+        "sequelize-cli": "^6.2.0",
+        "sqlite3": "^5.0.0"
     }
 }

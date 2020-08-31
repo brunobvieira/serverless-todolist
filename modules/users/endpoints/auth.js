@@ -1,14 +1,15 @@
 "use strict";
 
 const Joi = require("joi");
-const { Op } = require("sequelize");
-const UserModel = require("../../../models/User");
+const { Op, Sequelize } = require("sequelize");
+
+const UserModel = require("../../../database/models/User");
 const validator = require("../../../shared/validator");
 const response = require("../../../shared/response");
-const sequelize = require("../../../shared/database");
+const dbconfig = require("../../../database/database");
 const { generateToken, verifyPassword } = require("../../../shared/authorization");
 
-const User = UserModel(sequelize);
+const User = UserModel(new Sequelize(dbconfig));
 
 const authSchema = Joi.object({
     username: Joi.string().max(50).required(),
@@ -37,18 +38,18 @@ module.exports.login = async (event) => {
         if (!verifyPassword(value.password, user.password)) {
             return response.json({ path: "password", message: "Wrong password." }, 400);
         }
-        
+
         let res = {
             id: user.id,
             username: user.username,
             email: user.email,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
-            lastLogin: new Date()
+            lastLoginAt: new Date()
         };
 
         res.token = generateToken(res);
-        await User.update({ lastLogin: res.lastLogin }, { where: { id: user.id } });
+        await User.update({ lastLoginAt: res.lastLoginAt }, { where: { id: user.id } });
 
         return response.json(res, 200);
     } catch (err) {

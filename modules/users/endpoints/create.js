@@ -1,13 +1,15 @@
 "use strict";
 
 const Joi = require("joi");
-const UserModel = require("../../../models/User");
-const sequelize = require("../../../shared/database");
+const { Sequelize } = require("sequelize");
+
+const UserModel = require("../../../database/models/User");
+const dbconfig = require("../../../database/database");
 const response = require("../../../shared/response");
 const validator = require("../../../shared/validator");
 const { generateToken, createPassword } = require("../../../shared/authorization");
 
-const User = UserModel(sequelize);
+const User = UserModel(new Sequelize(dbconfig));
 
 const userSchema = Joi.object({
     username: Joi.string().min(3).max(50).required(),
@@ -32,7 +34,8 @@ module.exports.create = async (event) => {
         if (error) return response.json(error, 400);
 
         const usersWithThisUsername = await countByUsername(value.username);
-        if (usersWithThisUsername > 0) return response.json({ path: "username", message: "username already taken" }, 400);
+        if (usersWithThisUsername > 0)
+            return response.json({ path: "username", message: "username already taken" }, 400);
 
         const usersWithThisEmail = await countByEmail(value.email);
         if (usersWithThisEmail > 0) return response.json({ path: "email", message: "email already taken" }, 400);
@@ -47,12 +50,12 @@ module.exports.create = async (event) => {
             email: user.email,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
-            lastLogin: new Date()
+            lastLoginAt: new Date()
         };
 
         res.token = generateToken(res);
-        await User.update({ lastLogin: res.lastLogin }, { where: { id: user.id } });
-        
+        await User.update({ lastLoginAt: res.lastLoginAt }, { where: { id: user.id } });
+
         return response.json(res, 201);
     } catch (err) {
         return response.json(err, 500);

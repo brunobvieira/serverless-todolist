@@ -1,10 +1,13 @@
 "use strict";
 
+const { Sequelize } = require("sequelize");
+
 const response = require("../../../shared/response");
 const { authenticateAndGetUser } = require("../../../shared/authorization");
-const TodoModel = require("../../../models/Todo");
-const sequelize = require("../../../shared/database");
-const Todo = TodoModel(sequelize);
+const TodoModel = require("../../../database/models/Todo");
+const dbconfig = require("../../../database/database");
+
+const Todo = TodoModel(new Sequelize(dbconfig));
 
 module.exports.delete = async (event) => {
     try {
@@ -22,7 +25,7 @@ module.exports.delete = async (event) => {
 
         await todoFind.destroy();
 
-        return response.json(null, 201);
+        return response.json(null, 204);
     } catch (err) {
         return response.json(err, 500);
     }

@@ -30,9 +30,3 @@ module.exports.get = async (event) => {
 
     return response.json(res, 200);
 };
-
-module.exports.sync = async (event) => {
-    await User.sync({ force: true });
-    await Todo.sync({ force: true });
-    return response.json({ adfasd: "dasd" }, 200);
-};

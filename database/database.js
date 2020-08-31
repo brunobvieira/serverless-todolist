@@ -12,8 +12,8 @@ if (process.env.IS_OFFLINE || process.env.NODE_ENV == "local") {
         username: process.env.DBUSER_DEV,
         password: process.env.DBPASSWORD_DEV,
         database: process.env.DBDATABASE_DEV ? process.env.DBDATABASE_DEV : "todolist_dev",
-        dialect: process.env.DBDIALECT,
-        port: process.env.DBPORT,
+        dialect: process.env.DBDIALECT ? process.env.DBDIALECT : "mysql",
+        port: process.env.DBPORT ? process.env.DBPORT : 3306,
         pool: {
             min: 0,
             max: 1,
@@ -26,8 +26,8 @@ if (process.env.IS_OFFLINE || process.env.NODE_ENV == "local") {
         username: process.env.DBUSER,
         password: process.env.DBPASSWORD,
         database: process.env.DBDATABASE,
-        dialect: process.env.DBDIALECT,
-        port: process.env.DBPORT,
+        dialect: process.env.DBDIALECT ? process.env.DBDIALECT : "mysql",
+        port: process.env.DBPORT ? process.env.DBPORT : 3306,
         pool: {
             min: 0,
             max: 1,

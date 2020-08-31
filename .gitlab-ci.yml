@@ -14,6 +14,16 @@ before_script:
   - test -z "$AWS_SECRET_ACCESS_KEY" && echo $FAILURE_MESSAGE && exit 1
   - test -z "$AWS_ACCESS_KEY_ID" && echo $FAILURE_MESSAGE && exit 1
 
+###########
+# ANCHORS #
+###########
+
+.migration_definition: &migration_definition
+  stage: migration
+  when: manual
+  script:
+    - npm install
+    - npm run migrate
 
 ###########
 # develop #
@@ -76,15 +86,3 @@ deploy prod:
     - serverless deploy --stage production --region $AWS_REGION --verbose
   only:
     - master
-
-
-###########
-# ANCHORS #
-###########
-
-.migration_definition: &migration_definition
-  stage: migration
-  when: manual
-  script:
-    - npm install
-    - npm run migrate

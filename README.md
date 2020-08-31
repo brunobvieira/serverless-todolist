@@ -2,7 +2,7 @@
 
 This is a tiny REST API todo list app project, made with **Node.js** and **Serverless Framework** for **AWS LAMBDA**.
 
-# SETUP
+# Setup
 
 This code above will start local server:
 
@@ -38,6 +38,9 @@ This project has a simple gitlab CI/CD pipeline
 * DBPASSWORD_DEV
 * DBDATABASE_DEV
 
+# Todo
+* Unit Tests
+* Setup Unit Tests on Pipeline
 
 # FOR MORE
 [Serverless Documentarion](https://www.serverless.com/framework/docs/providers/aws/)

@@ -2,10 +2,11 @@
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { Sequelize } = require("sequelize");
 const UserModel = require("../database/models/User");
-const sequelize = require("./database");
+const dbconfig = require("../database/database");
 
-const User = UserModel(sequelize);
+const User = UserModel(new Sequelize(dbconfig));
 
 const tokenSecret = process.env.SECRET ? process.env.SECRET : "todolist";
 

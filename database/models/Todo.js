@@ -13,7 +13,8 @@ module.exports = (sequelize) => {
             references: {
                 model: User(sequelize),
                 key: "id"
-            }
+            },
+            allowNull: false
         },
         description: {
             type: DataTypes.STRING(50),

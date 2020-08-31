@@ -25,7 +25,7 @@ module.exports.delete = async (event) => {
 
         await todoFind.destroy();
 
-        return response.json(null, 201);
+        return response.json(null, 204);
     } catch (err) {
         return response.json(err, 500);
     }

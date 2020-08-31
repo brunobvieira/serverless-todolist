@@ -25,7 +25,7 @@ module.exports.get = async (event) => {
         email: authenticatedUser.email,
         createdAt: authenticatedUser.createdAt,
         updatedAt: authenticatedUser.updatedAt,
-        lastLogin: authenticatedUser.lastLogin
+        lastLoginAt: authenticatedUser.lastLoginAt
     };
 
     return response.json(res, 200);

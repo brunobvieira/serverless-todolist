@@ -5,9 +5,10 @@ module.exports = (schema, data) => {
 
   if (error) {
     error = error.details.map((err) => {
+      console.log(err);
       return {
         path: err.path[0],
-        error: err.message,
+        message: err.message,
         stack: "",
       };
     });

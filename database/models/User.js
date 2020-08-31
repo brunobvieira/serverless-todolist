@@ -19,6 +19,6 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING(60),
             allowNull: false
         },
-        lastLogin: DataTypes.DATE
+        lastLoginAt: DataTypes.DATE
     });
 };

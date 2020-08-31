@@ -45,11 +45,11 @@ module.exports.login = async (event) => {
             email: user.email,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt,
-            lastLogin: new Date()
+            lastLoginAt: new Date()
         };
 
         res.token = generateToken(res);
-        await User.update({ lastLogin: res.lastLogin }, { where: { id: user.id } });
+        await User.update({ lastLoginAt: res.lastLoginAt }, { where: { id: user.id } });
 
         return response.json(res, 200);
     } catch (err) {

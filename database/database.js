@@ -1,5 +1,3 @@
-console.log(process.env);
-
 if (process.env.IS_OFFLINE || process.env.NODE_ENV == "local") {
     module.exports = {
         database: "todolist",

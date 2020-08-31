@@ -7,3 +7,4 @@ jspm_packages
 
 #sqlite
 db.sqlite
+database/db.sqlite

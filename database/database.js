@@ -9,7 +9,7 @@ if (process.env.IS_OFFLINE || process.env.NODE_ENV == "local") {
         host: process.env.DBHOST_DEV,
         username: process.env.DBUSER_DEV,
         password: process.env.DBPASSWORD_DEV,
-        database: process.env.DBDATABASE_DEV,
+        database: process.env.DBDATABASE_DEV ? process.env.DBDATABASE_DEV : 'todolist_dev',
         dialect: process.env.DBDIALECT,
         port: process.env.DBPORT,
         pool: {

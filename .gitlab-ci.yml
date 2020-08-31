@@ -18,8 +18,17 @@ before_script:
 #  JOBS  #
 ##########
 
+unit tests:
+  stage: test
+  variables:
+    DBHOST: $DBHOST_DEV
+  script:
+    - echo $DBHOST
+
+
 deploy dev:
   stage: deploy
+  when: manual
   environment:
     name: develop
     url: "https://${AWS_REGION}.console.aws.amazon.com/lambda/home?region=${AWS_REGION}#/applications/todolist-dev"

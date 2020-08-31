@@ -5,10 +5,10 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon --exec serverless offline start -e \"js yml json\"",
-        "migrate": "npx sequelize db:migrate",
-        "migrate:undo": "npx sequelize db:migrate:undo:all",
-        "seed": "npx sequelize db:seed:all",
-        "seed:undo": "npx sequelize db:seed:undo:all",
+        "migrate": "sequelize db:migrate",
+        "migrate:undo": "sequelize db:migrate:undo:all",
+        "seed": "sequelize db:seed:all",
+        "seed:undo": "sequelize db:seed:undo:all",
         "migrate local": "NODE_ENV=local sequelize db:migrate",
         "migrate:undo local": "NODE_ENV=local sequelize db:migrate:undo:all"
     },

@@ -2,6 +2,7 @@ image: node:latest
 
 stages:
   - test
+  - migration
   - deploy
   - teardown
 
@@ -14,21 +15,22 @@ before_script:
   - test -z "$AWS_ACCESS_KEY_ID" && echo $FAILURE_MESSAGE && exit 1
 
 
-##########
-#  JOBS  #
-##########
+###########
+# develop #
+###########
 
-unit tests:
-  stage: test
+migration dev:
+  <<: *migration_definition
   variables:
-    DBHOST: $DBHOST_DEV
-  script:
-    - echo $DBHOST
-
+    NODE_ENV: development
+  only:
+    - develop
 
 deploy dev:
   stage: deploy
   when: manual
+  variables:
+    NODE_ENV: development
   environment:
     name: develop
     url: "https://${AWS_REGION}.console.aws.amazon.com/lambda/home?region=${AWS_REGION}#/applications/todolist-dev"
@@ -39,7 +41,6 @@ deploy dev:
   only:
     - develop
     
-
 teardown dev:
   stage: teardown
   when: manual
@@ -51,8 +52,22 @@ teardown dev:
     - serverless remove --stage dev --region $AWS_REGION --verbose
 
 
-deploy production:
+##############
+# production #
+##############
+
+migration prod:
+  <<: *migration_definition
+  variables:
+    NODE_ENV: production
+  only:
+    - master
+
+deploy prod:
   stage: deploy
+  when: manual
+  variables:
+    NODE_ENV: production
   environment:
     name: production
     url: "https://${AWS_REGION}.console.aws.amazon.com/lambda/home?region=${AWS_REGION}#/applications/todolist-production"
@@ -61,3 +76,15 @@ deploy production:
     - serverless deploy --stage production --region $AWS_REGION --verbose
   only:
     - master
+
+
+###########
+# ANCHORS #
+###########
+
+.migration_definition: &migration_definition
+  stage: migration
+  when: manual
+  script:
+    - npm install
+    - npm run migrate
